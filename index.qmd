@@ -1,0 +1,326 @@
+---
+title: "Práctica 4 - Algoritmos de Inteligencia Artificial para ciencias forestales"
+author: "Adrián Cidre González"
+date:  "04/01/2023"
+date-format: long
+
+# Format options
+lang: es
+page-layout: full
+format: 
+  html:
+    toc: true
+    toc-location: left
+    toc-title: 'Contenidos'
+    css: './styles/style.css'
+    theme: united
+    highlight-style: dracula
+  
+# Code
+code-copy: hover
+#code-fold: true
+execute: 
+  warning: false
+
+# References
+bibliography: './styles/biblio.bib'
+crossref: 
+  fig-title: Fig.
+
+# Figures and tables
+fig-align: 'center'
+fig-width: 14
+fig-height: 8
+fig-cap-location: bottom
+tbl-cap-location: top
+---
+
+```{r}
+#| echo: false
+knitr::opts_chunk$set(ft.align = 'center')
+```
+
+![](styles/ml.jpg){fig-align="center"}
+
+# Introducción  
+
+En esta práctica se tomará contacto con los métodos de *feature selection* de algoritmos de *machine learning*, aplicando los principios generales vistos durante la asignatura de Algoritmos de Inteligencia Artificial para las Ciencias Forestales dentro del Máster Geoforest.  
+
+Para llevar a cabo esta tarea, se utiliza la versión 4.2.2 del software R [@R]. Todos los pasos del proceso de modelado se han llevado a cabo utilizando el paquete `mlr` [@mlr].  
+
+Todos los paquetes utilizados se encuentran en el siguiente bloque de código:  
+
+```{r paquetes}
+require(pacman)
+
+p_load(here, sf, terra, mlr, flextable, report, tidyverse)
+```
+
+# Resolución del ejercicio  
+
+## Preparación de los datos  
+
+En primer lugar cargamos los datos que se han exportado en la práctica 3.  
+
+```{r}
+myData <- read.csv(here('01-inputs/myData.csv')) |> 
+  dplyr::select(-X) |> 
+  mutate(class_id = factor(class_id))
+```
+
+Como ya los tenemos en el formato adecuado, podemos pasar a la aplicación de filtros.  
+
+## Aplicación de filtros  
+
+Los filtros son técnicas de selección de variables que consisten en seleccionar un subconjunto de variables basadas en una métrica que es independiente del algoritmo que se utilizará. Es decir, forma parte del preprocesado de los datos. Se van a comparar los resultados en los siguientes filtros:  
+
+* **Information gain**: selecciona una parte de los predictores basándose en medir la ganancia de información que produce una variable sobre la variable respuesta [@Trabelsi2017]. Se utiliza la siguiente fórmula:  
+
+$$
+IG(feat) = H(Y) - H_{feat}(Y)
+$${#eq-infgain}
+
+donde IG es la *information gain* de cada variable según su contribución a la clase *Y*; *H(Y)* es la entropía de la clase *Y* (@eq-entropia).  
+
+$$
+H(Y) = \sum_{i}-P(v_i)log_2 P(v_i)
+$${#eq-entropia}
+
+siendo $P(v_i)$ la probabilidad de tener el valor $v_i$ contribuyendo a los valores totales.  
+
+* **Chi squared**: utiliza un test $\chi^2$ para comprobar si dos variables son independientes. Es un medida de la capacidad de predecir el valor de una variable a partir de la clase correspondiente [@Trabelsi2017]. Se logra mediante la comprobación de la independencia entre ambos, además de comprobar la ausencia de vínculos entre ellos [@Trabelsi2017]:  
+
+$$
+CT = \sum^L_{i=1} \sum^C_{j=1} \frac{(n_{ij} - e_{ij})^2}{e_{ij}}
+$${#eq-squared}
+
+donde $n_{ij}$ es el valor observado en la tabla de contingencia creada durante el proceso de evaluación; $L_i$ el total de las filas; $C_i$ el total de las columnas; y $e_{ij} = \frac{L_i C_i}{n}$.  
+
+* **Gain ratio**: es una modificación de *information gain* que reduce su *bias*. Utiliza la información intrínseca de cada ramificación [@Praveena].  
+
+$$
+GR(feat) = \frac{IG(feat)}{H(feat)}
+$$ {#eq-gr}
+
+donde $H(feat) = \sum_j -P(v_j) log_2 P(v_j)$; que es la probabilidad de que el valor $v_i$ contribuya a los valores totales por la variable $j$.  
+
+En el siguiente bloque de código se crea un objeto del tipo *task*, y a continuación se aplican los filtros. En el tabset siguiente se muestran los predictores ordenados por importancia (el top-10). Las variables más importantes son diferentes en cada uno de los filtros. En *information gain* y *gain ratio* las variables más importantes pertenecen a primavera y verano principalmente. En el caso de *chi-squared*, variables otoñales tienen también mucha importancia.  
+
+```{r}
+# Objeto task
+class.task <- 
+  makeClassifTask(id = 'nieves', data = myData, target = 'class_id')
+
+# Aplicación de filtros
+fv <- 
+  generateFilterValuesData(class.task,
+                               method = c('FSelector_information.gain','FSelector_chi.squared','FSelector_gain.ratio'))
+```
+
+:::{.panel-tabset}
+
+## Information gain  
+
+
+```{r}
+#| echo: false
+flextable(fv$data |> 
+            filter(filter == 'FSelector_information.gain') |> 
+            arrange(-value) |> 
+            slice_head(n = 10)) 
+```
+
+## Chi squared  
+
+```{r}
+#| echo: false
+flextable(fv$data |> 
+            filter(filter == 'FSelector_chi.squared')|> 
+            arrange(-value)|> 
+            slice_head(n = 10)) 
+```
+
+## Gain ratio  
+
+```{r}
+#| echo: false
+flextable(fv$data |> 
+            filter(filter == 'FSelector_gain.ratio') |> 
+            arrange(-value)|> 
+            slice_head(n = 10)) 
+```
+
+:::
+
+## Wrapper basado en Random Forest  
+
+El primer paso es configurar una *task*, que ya se ha hecho en el apartado anterior.
+
+Para la tarea se pide utilizar un algoritmo de *Random Forest* con 1000 árboles y las variables *k* determinadas por defecto (raíz cuadrada del número total de variables). Como el número de variables se actualizará en cada iteración, este parámetro *k* lo hará también.  
+
+```{r}
+rf_spec <- 
+  makeLearner(
+    cl = 'classif.randomForest',
+    ntree = 1000,
+    predict.type = 'prob'
+  )
+```
+
+El siguiente paso consiste en aplicar el *wrapper*. Los *wrappers* consisten en utilizar un método de *machine learning* para evaluar cuales son las variables más importantes para predecir la variable respuesta. En este caso se utiliza un *wrapper* basado en *Random Forest* utilizando una búsqueda de tipo secuencial hacia adelante (*forward selection*), es decir, se comienza con una variable y se van añadiendo secuencialmente según la que aporte más al modelo en cada iteración. Se utilizará una *10-fold Cross Validation* con la métrica de exactitud de error de clasificación (mmce).  
+
+```{r}
+#| cache: true
+# Control object
+ctrol_fs <- 
+  makeFeatSelControlSequential(method = 'sfs',  # <- Sequential Forward Search
+                               alpha = 0.001) 
+
+# Cross validation resamples
+set.seed(126)
+rdesc <- 
+  makeResampleDesc(method = 'CV',
+                   iters = 10)
+
+# Especificacion del wrapper
+rf_wrapper <- 
+  makeFeatSelWrapper(learner = rf_spec,
+                     resampling = rdesc,
+                     measures = mmce,
+                     control = ctrol_fs,
+                     show.info = FALSE)
+
+# Entrenar el modelo
+rf_fit <- 
+  train(learner = rf_wrapper,
+        task = class.task)
+```
+
+## Resultados  
+
+Finalmente se analizarán los resultados obtenidos. Para ello, se extraen los resultados con las función `getFeatSelResult`. En siguiente lugar, se contestan las preguntas propuestas en la práctica.  
+
+```{r}
+rf_results <- 
+  getFeatSelResult(rf_fit)
+```
+
+* **Cuáles son las características más importantes?**
+
+Las características más importantes se pueden explorar con el siguiente código:  
+
+```{r}
+analyzeFeatSelResult(rf_results)
+```
+
+Tenemos un total de 5 características ordenadas por orden de importancia (SWIR1V, RedP, RedEdge3O, RedEdge2V, GreenV).   
+
+* **Son las mismas características que en la práctica anterior (método embedded)?**  
+
+En la tabla siguiente se comparan las mejores características del método *embedded* con las características del método *wrapper*. La única banda que comparten es *RedV*.  
+
+<center>
+```{r}
+#| echo: false
+tabComp <- data.frame(
+  Ranking = 1:5,
+  Embedded = c('RedP','SWIR2P','BlueP','RedV','GreenP'),
+  Wrapper = c('SWIR1V','RedP','RedEdge3O','RedEdge2V','GreenV'),
+  Filter_Information_gain = c('SWIR2P','RedV','SWIR1V','RedP','GreenV'),
+  Filter_Chi_squared = c('BlueP','RedP','GreenO','SWIR2O','SWIR2V'),
+  Filter_Gain_ratio = c('BlueP','RedP','RedV','SWIR2V','SWIR2P')
+)
+
+flextable(tabComp)
+```
+</center>
+
+* **Hay similitudes con respecto a los filtros?**  
+
+Si volvemos a la tabla anterior podemos ver que comparten las siguientes características:    
+
+ * Information gain: RedP, SWIR1V y GreenV  
+ 
+ * Chi squared: RedP  
+ 
+ * Gain ratio: RedP  
+ 
+# Wrapper backward   
+
+## Ajuste del modelo  
+
+En este apartado se realizará el mismo ejercicio, pero aplicando un método de selección secuencial hacia atrás (*backward elimination*). En este método se comienza con el modelo con todas las variables y se van eliminando secuencialmente buscando una mejora en el modelo hasta alcanzar el más parsimonioso.   
+
+Para ello, se realizarán los mismos pasos que en el caso anterior pero cambiando el *wrapper*.  
+
+```{r}
+#| cache: true
+# Nuevo wrapper con backward elimination
+ctrol_be <- 
+  makeFeatSelControlSequential(method = 'sbs', # <- Backward elimination
+                               beta = -0.001)  # <- Valor de mejora
+
+# Wrapper
+sbs_rf_wrapper <- 
+  makeFeatSelWrapper(learner = rf_spec,
+                     resampling = rdesc,
+                     measures = mmce,
+                     control = ctrol_be,
+                     show.info = FALSE)
+
+# Entrenar modelo
+doParallel::registerDoParallel()
+sbs_rf_fit <- 
+  train(learner = sbs_rf_wrapper,
+        task = class.task)
+```
+
+Simplemente se han cambiado los parámetros de la función `makeFeatSelControlSequential`, el resto se mantiene igual.  
+
+## Resultados  
+
+Al igual que en el caso anterior, se contestarán las preguntas formuladas en el ejercicio para mostran los resultados.  
+
+* **Hay más o menos características seleccionadas que en el método anterior? Encuentras diferencias?**  
+
+Tenemos un total de 24 características con el método *Backward elimination*, mientras que con *Forward selection* teníamos solamente 5. En el código se muestran las que las que han ido eliminando secuencialmente (BlueV, RedEdge1O, SWIR2V, RedEdge·P, GreenO, NIRO).  
+
+La diferencia es que este método (*backward*) contiene 19 variables más que el otro método.  
+
+```{r}
+# Obtener resultados
+sbs_rf_results <- 
+  getFeatSelResult(sbs_rf_fit)
+
+# Ver resultados
+analyzeFeatSelResult(sbs_rf_results)
+```
+
+* **Crees que alguno de los fenómenos relacionados con el artículo de Breiman tiene relación con lo que está ocurriendo?**  
+
+Sí, con el efecto *Rashomon* y la multiplicidad de buenos modelos. Es posible obtener diferentes resultados cuando existen muchos modelos diferentes para unos determinados datos que tienen aproximadamente el mismo error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adrián Cidre González">
+
+<title>Práctica 4 - Algoritmos de Inteligencia Artificial para ciencias forestales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#resolución-del-ejercicio" id="toc-resolución-del-ejercicio" class="nav-link" data-scroll-target="#resolución-del-ejercicio">Resolución del ejercicio</a>
+  <ul class="collapse">
+  <li><a href="#preparación-de-los-datos" id="toc-preparación-de-los-datos" class="nav-link" data-scroll-target="#preparación-de-los-datos">Preparación de los datos</a></li>
+  <li><a href="#aplicación-de-filtros" id="toc-aplicación-de-filtros" class="nav-link" data-scroll-target="#aplicación-de-filtros">Aplicación de filtros</a></li>
+  <li><a href="#wrapper-basado-en-random-forest" id="toc-wrapper-basado-en-random-forest" class="nav-link" data-scroll-target="#wrapper-basado-en-random-forest">Wrapper basado en Random Forest</a></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">Resultados</a></li>
+  </ul></li>
+  <li><a href="#wrapper-backward" id="toc-wrapper-backward" class="nav-link" data-scroll-target="#wrapper-backward">Wrapper backward</a>
+  <ul class="collapse">
+  <li><a href="#ajuste-del-modelo" id="toc-ajuste-del-modelo" class="nav-link" data-scroll-target="#ajuste-del-modelo">Ajuste del modelo</a></li>
+  <li><a href="#resultados-1" id="toc-resultados-1" class="nav-link" data-scroll-target="#resultados-1">Resultados</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Práctica 4 - Algoritmos de Inteligencia Artificial para ciencias forestales</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adrián Cidre González </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">1 de abril de 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="styles/ml.jpg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>En esta práctica se tomará contacto con los métodos de <em>feature selection</em> de algoritmos de <em>machine learning</em>, aplicando los principios generales vistos durante la asignatura de Algoritmos de Inteligencia Artificial para las Ciencias Forestales dentro del Máster Geoforest.</p>
+<p>Para llevar a cabo esta tarea, se utiliza la versión 4.2.2 del software R <span class="citation" data-cites="R">(<a href="#ref-R" role="doc-biblioref">R Core Team 2022</a>)</span>. Todos los pasos del proceso de modelado se han llevado a cabo utilizando el paquete <code>mlr</code> <span class="citation" data-cites="mlr">(<a href="#ref-mlr" role="doc-biblioref">Bischl et&nbsp;al. 2016</a>)</span>.</p>
+<p>Todos los paquetes utilizados se encuentran en el siguiente bloque de código:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(pacman)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_load</span>(here, sf, terra, mlr, flextable, report, tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="resolución-del-ejercicio" class="level1">
+<h1>Resolución del ejercicio</h1>
+<section id="preparación-de-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="preparación-de-los-datos">Preparación de los datos</h2>
+<p>En primer lugar cargamos los datos que se han exportado en la práctica 3.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>myData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">'01-inputs/myData.csv'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>X) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class_id =</span> <span class="fu">factor</span>(class_id))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Como ya los tenemos en el formato adecuado, podemos pasar a la aplicación de filtros.</p>
+</section>
+<section id="aplicación-de-filtros" class="level2">
+<h2 class="anchored" data-anchor-id="aplicación-de-filtros">Aplicación de filtros</h2>
+<p>Los filtros son técnicas de selección de variables que consisten en seleccionar un subconjunto de variables basadas en una métrica que es independiente del algoritmo que se utilizará. Es decir, forma parte del preprocesado de los datos. Se van a comparar los resultados en los siguientes filtros:</p>
+<ul>
+<li><strong>Information gain</strong>: selecciona una parte de los predictores basándose en medir la ganancia de información que produce una variable sobre la variable respuesta <span class="citation" data-cites="Trabelsi2017">(<a href="#ref-Trabelsi2017" role="doc-biblioref">Trabelsi, Meddouri, y Maddouri 2017</a>)</span>. Se utiliza la siguiente fórmula:</li>
+</ul>
+<p><span id="eq-infgain"><span class="math display">\[
+IG(feat) = H(Y) - H_{feat}(Y)
+\tag{1}\]</span></span></p>
+<p>donde IG es la <em>information gain</em> de cada variable según su contribución a la clase <em>Y</em>; <em>H(Y)</em> es la entropía de la clase <em>Y</em> (<a href="#eq-entropia">Ecuación&nbsp;2</a>).</p>
+<p><span id="eq-entropia"><span class="math display">\[
+H(Y) = \sum_{i}-P(v_i)log_2 P(v_i)
+\tag{2}\]</span></span></p>
+<p>siendo <span class="math inline">\(P(v_i)\)</span> la probabilidad de tener el valor <span class="math inline">\(v_i\)</span> contribuyendo a los valores totales.</p>
+<ul>
+<li><strong>Chi squared</strong>: utiliza un test <span class="math inline">\(\chi^2\)</span> para comprobar si dos variables son independientes. Es un medida de la capacidad de predecir el valor de una variable a partir de la clase correspondiente <span class="citation" data-cites="Trabelsi2017">(<a href="#ref-Trabelsi2017" role="doc-biblioref">Trabelsi, Meddouri, y Maddouri 2017</a>)</span>. Se logra mediante la comprobación de la independencia entre ambos, además de comprobar la ausencia de vínculos entre ellos <span class="citation" data-cites="Trabelsi2017">(<a href="#ref-Trabelsi2017" role="doc-biblioref">Trabelsi, Meddouri, y Maddouri 2017</a>)</span>:</li>
+</ul>
+<p><span id="eq-squared"><span class="math display">\[
+CT = \sum^L_{i=1} \sum^C_{j=1} \frac{(n_{ij} - e_{ij})^2}{e_{ij}}
+\tag{3}\]</span></span></p>
+<p>donde <span class="math inline">\(n_{ij}\)</span> es el valor observado en la tabla de contingencia creada durante el proceso de evaluación; <span class="math inline">\(L_i\)</span> el total de las filas; <span class="math inline">\(C_i\)</span> el total de las columnas; y <span class="math inline">\(e_{ij} = \frac{L_i C_i}{n}\)</span>.</p>
+<ul>
+<li><strong>Gain ratio</strong>: es una modificación de <em>information gain</em> que reduce su <em>bias</em>. Utiliza la información intrínseca de cada ramificación <span class="citation" data-cites="Praveena">(<a href="#ref-Praveena" role="doc-biblioref">R., L., y S. 2011</a>)</span>.</li>
+</ul>
+<p><span id="eq-gr"><span class="math display">\[
+GR(feat) = \frac{IG(feat)}{H(feat)}
+\tag{4}\]</span></span></p>
+<p>donde <span class="math inline">\(H(feat) = \sum_j -P(v_j) log_2 P(v_j)\)</span>; que es la probabilidad de que el valor <span class="math inline">\(v_i\)</span> contribuya a los valores totales por la variable <span class="math inline">\(j\)</span>.</p>
+<p>En el siguiente bloque de código se crea un objeto del tipo <em>task</em>, y a continuación se aplican los filtros. En el tabset siguiente se muestran los predictores ordenados por importancia (el top-10). Las variables más importantes son diferentes en cada uno de los filtros. En <em>information gain</em> y <em>gain ratio</em> las variables más importantes pertenecen a primavera y verano principalmente. En el caso de <em>chi-squared</em>, variables otoñales tienen también mucha importancia.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Objeto task</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>class.task <span class="ot">&lt;-</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeClassifTask</span>(<span class="at">id =</span> <span class="st">'nieves'</span>, <span class="at">data =</span> myData, <span class="at">target =</span> <span class="st">'class_id'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicación de filtros</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>fv <span class="ot">&lt;-</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generateFilterValuesData</span>(class.task,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">method =</span> <span class="fu">c</span>(<span class="st">'FSelector_information.gain'</span>,<span class="st">'FSelector_chi.squared'</span>,<span class="st">'FSelector_gain.ratio'</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Information gain</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Chi squared</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Gain ratio</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-f134c60c{}.cl-f119774e{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f1251658{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f1251676{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f12569d2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f12569f0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f12569fa{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1256a04{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1256a0e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1256a18{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-f134c60c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-f12569d2"><p class="cl-f1251658"><span class="cl-f119774e">name</span></p></th><th class="cl-f12569d2"><p class="cl-f1251658"><span class="cl-f119774e">type</span></p></th><th class="cl-f12569d2"><p class="cl-f1251658"><span class="cl-f119774e">filter</span></p></th><th class="cl-f12569f0"><p class="cl-f1251676"><span class="cl-f119774e">value</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">SWIR2P</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8812555</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">RedV</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8753541</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">SWIR1V</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8573039</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">RedP</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8375247</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">GreenV</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8303941</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">RedEdge1V</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8251750</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">BlueV</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8134667</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">BlueP</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.8013897</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">RedEdge1P</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f12569fa"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a04"><p class="cl-f1251676"><span class="cl-f119774e">0.7883756</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f1256a0e"><p class="cl-f1251658"><span class="cl-f119774e">SWIR1P</span></p></td><td class="cl-f1256a0e"><p class="cl-f1251658"><span class="cl-f119774e">numeric</span></p></td><td class="cl-f1256a0e"><p class="cl-f1251658"><span class="cl-f119774e">FSelector_information.gain</span></p></td><td class="cl-f1256a18"><p class="cl-f1251676"><span class="cl-f119774e">0.7876988</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-f2309360{}.cl-f2080724{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f2197d42{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f2197d60{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f219f510{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f219f524{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f219f52e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f219f538{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f219f542{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f219f556{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-f2309360"><thead><tr style="overflow-wrap:break-word;"><th class="cl-f219f510"><p class="cl-f2197d42"><span class="cl-f2080724">name</span></p></th><th class="cl-f219f510"><p class="cl-f2197d42"><span class="cl-f2080724">type</span></p></th><th class="cl-f219f510"><p class="cl-f2197d42"><span class="cl-f2080724">filter</span></p></th><th class="cl-f219f524"><p class="cl-f2197d60"><span class="cl-f2080724">value</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">BlueP</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.7346012</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">RedP</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6395950</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">GreenO</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6342187</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">SWIR2O</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6308091</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">SWIR2V</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6226675</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">RedEdge1P</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6208411</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">GreenP</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6188529</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">BlueO</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6154084</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">RedV</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f52e"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f538"><p class="cl-f2197d60"><span class="cl-f2080724">0.6085626</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f219f542"><p class="cl-f2197d42"><span class="cl-f2080724">RedEdge1O</span></p></td><td class="cl-f219f542"><p class="cl-f2197d42"><span class="cl-f2080724">numeric</span></p></td><td class="cl-f219f542"><p class="cl-f2197d42"><span class="cl-f2080724">FSelector_chi.squared</span></p></td><td class="cl-f219f556"><p class="cl-f2197d60"><span class="cl-f2080724">0.6038368</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-f29582fc{}.cl-f2747d3c{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f27ef604{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f27ef622{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f27f3ea2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f27f3eb6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f27f3ec0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f27f3eca{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f27f3ed4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f27f3ede{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-f29582fc"><thead><tr style="overflow-wrap:break-word;"><th class="cl-f27f3ea2"><p class="cl-f27ef604"><span class="cl-f2747d3c">name</span></p></th><th class="cl-f27f3ea2"><p class="cl-f27ef604"><span class="cl-f2747d3c">type</span></p></th><th class="cl-f27f3ea2"><p class="cl-f27ef604"><span class="cl-f2747d3c">filter</span></p></th><th class="cl-f27f3eb6"><p class="cl-f27ef622"><span class="cl-f2747d3c">value</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">BlueP</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5899637</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">RedP</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5843722</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">RedV</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5513783</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">SWIR2V</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5169832</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">SWIR2P</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5162849</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">RedEdge1V</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5116936</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">GreenP</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.5109752</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">RedEdge1P</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.4958598</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">SWIR1V</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ec0"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3eca"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.4830516</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f27f3ed4"><p class="cl-f27ef604"><span class="cl-f2747d3c">SWIR2O</span></p></td><td class="cl-f27f3ed4"><p class="cl-f27ef604"><span class="cl-f2747d3c">numeric</span></p></td><td class="cl-f27f3ed4"><p class="cl-f27ef604"><span class="cl-f2747d3c">FSelector_gain.ratio</span></p></td><td class="cl-f27f3ede"><p class="cl-f27ef622"><span class="cl-f2747d3c">0.4772716</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="wrapper-basado-en-random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="wrapper-basado-en-random-forest">Wrapper basado en Random Forest</h2>
+<p>El primer paso es configurar una <em>task</em>, que ya se ha hecho en el apartado anterior.</p>
+<p>Para la tarea se pide utilizar un algoritmo de <em>Random Forest</em> con 1000 árboles y las variables <em>k</em> determinadas por defecto (raíz cuadrada del número total de variables). Como el número de variables se actualizará en cada iteración, este parámetro <em>k</em> lo hará también.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rf_spec <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeLearner</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cl =</span> <span class="st">'classif.randomForest'</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ntree =</span> <span class="dv">1000</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">predict.type =</span> <span class="st">'prob'</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>El siguiente paso consiste en aplicar el <em>wrapper</em>. Los <em>wrappers</em> consisten en utilizar un método de <em>machine learning</em> para evaluar cuales son las variables más importantes para predecir la variable respuesta. En este caso se utiliza un <em>wrapper</em> basado en <em>Random Forest</em> utilizando una búsqueda de tipo secuencial hacia adelante (<em>forward selection</em>), es decir, se comienza con una variable y se van añadiendo secuencialmente según la que aporte más al modelo en cada iteración. Se utilizará una <em>10-fold Cross Validation</em> con la métrica de exactitud de error de clasificación (mmce).</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_70e42108211ec8f3472994f091de69cb">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Control object</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ctrol_fs <span class="ot">&lt;-</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeFeatSelControlSequential</span>(<span class="at">method =</span> <span class="st">'sfs'</span>,  <span class="co"># &lt;- Sequential Forward Search</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">alpha =</span> <span class="fl">0.001</span>) </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross validation resamples</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">126</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>rdesc <span class="ot">&lt;-</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeResampleDesc</span>(<span class="at">method =</span> <span class="st">'CV'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">iters =</span> <span class="dv">10</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificacion del wrapper</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>rf_wrapper <span class="ot">&lt;-</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeFeatSelWrapper</span>(<span class="at">learner =</span> rf_spec,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">resampling =</span> rdesc,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">measures =</span> mmce,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">control =</span> ctrol_fs,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show.info =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrenar el modelo</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>(<span class="at">learner =</span> rf_wrapper,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">task =</span> class.task)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
+<p>Finalmente se analizarán los resultados obtenidos. Para ello, se extraen los resultados con las función <code>getFeatSelResult</code>. En siguiente lugar, se contestan las preguntas propuestas en la práctica.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rf_results <span class="ot">&lt;-</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">getFeatSelResult</span>(rf_fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Cuáles son las características más importantes?</strong></li>
+</ul>
+<p>Las características más importantes se pueden explorar con el siguiente código:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">analyzeFeatSelResult</span>(rf_results)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Features         : 5
+Performance      : mmce.test.mean=0.1546341
+GreenV, RedEdge2V, SWIR1V, RedP, RedEdge3O
+
+Path to optimum:
+- Features:    0  Init   :                       Perf = 0.90195  Diff: NA  *
+- Features:    1  Add    : SWIR1V                Perf = 0.60451  Diff: 0.29744  *
+- Features:    2  Add    : RedP                  Perf = 0.29012  Diff: 0.31439  *
+- Features:    3  Add    : RedEdge3O             Perf = 0.2164  Diff: 0.07372  *
+- Features:    4  Add    : RedEdge2V             Perf = 0.18421  Diff: 0.032195  *
+- Features:    5  Add    : GreenV                Perf = 0.15463  Diff: 0.029573  *
+
+Stopped, because no improving feature was found.</code></pre>
+</div>
+</div>
+<p>Tenemos un total de 5 características ordenadas por orden de importancia (SWIR1V, RedP, RedEdge3O, RedEdge2V, GreenV).</p>
+<ul>
+<li><strong>Son las mismas características que en la práctica anterior (método embedded)?</strong></li>
+</ul>
+<p>En la tabla siguiente se comparan las mejores características del método <em>embedded</em> con las características del método <em>wrapper</em>. La única banda que comparten es <em>RedV</em>.</p>
+<center>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-f3f3efa8{}.cl-f3e8e428{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f3ed2b00{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f3ed2b0a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f3ed4928{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f3ed4932{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f3ed4933{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f3ed4934{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f3ed4935{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f3ed493c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-f3f3efa8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-f3ed4928"><p class="cl-f3ed2b00"><span class="cl-f3e8e428">Ranking</span></p></th><th class="cl-f3ed4932"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">Embedded</span></p></th><th class="cl-f3ed4932"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">Wrapper</span></p></th><th class="cl-f3ed4932"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">Filter_Information_gain</span></p></th><th class="cl-f3ed4932"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">Filter_Chi_squared</span></p></th><th class="cl-f3ed4932"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">Filter_Gain_ratio</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f3ed4933"><p class="cl-f3ed2b00"><span class="cl-f3e8e428">1</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedP</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR1V</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR2P</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">BlueP</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">BlueP</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f3ed4933"><p class="cl-f3ed2b00"><span class="cl-f3e8e428">2</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR2P</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedP</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedV</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedP</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedP</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f3ed4933"><p class="cl-f3ed2b00"><span class="cl-f3e8e428">3</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">BlueP</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedEdge3O</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR1V</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">GreenO</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedV</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f3ed4933"><p class="cl-f3ed2b00"><span class="cl-f3e8e428">4</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedV</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedEdge2V</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">RedP</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR2O</span></p></td><td class="cl-f3ed4934"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR2V</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f3ed4935"><p class="cl-f3ed2b00"><span class="cl-f3e8e428">5</span></p></td><td class="cl-f3ed493c"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">GreenP</span></p></td><td class="cl-f3ed493c"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">GreenV</span></p></td><td class="cl-f3ed493c"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">GreenV</span></p></td><td class="cl-f3ed493c"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR2V</span></p></td><td class="cl-f3ed493c"><p class="cl-f3ed2b0a"><span class="cl-f3e8e428">SWIR2P</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</center>
+<ul>
+<li><strong>Hay similitudes con respecto a los filtros?</strong></li>
+</ul>
+<p>Si volvemos a la tabla anterior podemos ver que comparten las siguientes características:</p>
+<ul>
+<li><p>Information gain: RedP, SWIR1V y GreenV</p></li>
+<li><p>Chi squared: RedP</p></li>
+<li><p>Gain ratio: RedP</p></li>
+</ul>
+</section>
+</section>
+<section id="wrapper-backward" class="level1">
+<h1>Wrapper backward</h1>
+<section id="ajuste-del-modelo" class="level2">
+<h2 class="anchored" data-anchor-id="ajuste-del-modelo">Ajuste del modelo</h2>
+<p>En este apartado se realizará el mismo ejercicio, pero aplicando un método de selección secuencial hacia atrás (<em>backward elimination</em>). En este método se comienza con el modelo con todas las variables y se van eliminando secuencialmente buscando una mejora en el modelo hasta alcanzar el más parsimonioso.</p>
+<p>Para ello, se realizarán los mismos pasos que en el caso anterior pero cambiando el <em>wrapper</em>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_1502a8f306f872ada6f3f252d5dae9d5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nuevo wrapper con backward elimination</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ctrol_be <span class="ot">&lt;-</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeFeatSelControlSequential</span>(<span class="at">method =</span> <span class="st">'sbs'</span>, <span class="co"># &lt;- Backward elimination</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">beta =</span> <span class="sc">-</span><span class="fl">0.001</span>)  <span class="co"># &lt;- Valor de mejora</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrapper</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sbs_rf_wrapper <span class="ot">&lt;-</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeFeatSelWrapper</span>(<span class="at">learner =</span> rf_spec,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">resampling =</span> rdesc,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">measures =</span> mmce,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">control =</span> ctrol_be,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show.info =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrenar modelo</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>sbs_rf_fit <span class="ot">&lt;-</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>(<span class="at">learner =</span> sbs_rf_wrapper,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">task =</span> class.task)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Simplemente se han cambiado los parámetros de la función <code>makeFeatSelControlSequential</code>, el resto se mantiene igual.</p>
+</section>
+<section id="resultados-1" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-1">Resultados</h2>
+<p>Al igual que en el caso anterior, se contestarán las preguntas formuladas en el ejercicio para mostran los resultados.</p>
+<ul>
+<li><strong>Hay más o menos características seleccionadas que en el método anterior? Encuentras diferencias?</strong></li>
+</ul>
+<p>Tenemos un total de 24 características con el método <em>Backward elimination</em>, mientras que con <em>Forward selection</em> teníamos solamente 5. En el código se muestran las que las que han ido eliminando secuencialmente (BlueV, RedEdge1O, SWIR2V, RedEdge·P, GreenO, NIRO).</p>
+<p>La diferencia es que este método (<em>backward</em>) contiene 19 variables más que el otro método.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener resultados</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sbs_rf_results <span class="ot">&lt;-</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">getFeatSelResult</span>(sbs_rf_fit)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver resultados</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">analyzeFeatSelResult</span>(sbs_rf_results)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Features         : 24
+Performance      : mmce.test.mean=0.1446951
+GreenV, RedV, RedEdge1V, RedEdge2V, RedEdge3V, NIRV, NIR2V, SWIR1V, BlueP, GreenP, RedP, RedEdge1P, RedEdge2P, NIRP, NIR2P, SWIR1P, SWIR2P, BlueO, RedO, RedEdge2O, RedEdge3O, NIR2O, SWIR1O, SWIR2O
+
+Path to optimum:
+- Features:   30  Init   :                       Perf = 0.16701  Diff: NA  *
+- Features:   29  Remove : BlueV                 Perf = 0.15707  Diff: 0.009939  *
+- Features:   28  Remove : RedEdge1O             Perf = 0.15463  Diff: 0.002439  *
+- Features:   27  Remove : SWIR2V                Perf = 0.1522  Diff: 0.002439  *
+- Features:   26  Remove : RedEdge3P             Perf = 0.14726  Diff: 0.004939  *
+- Features:   25  Remove : GreenO                Perf = 0.14463  Diff: 0.002622  *
+- Features:   24  Remove : NIRO                  Perf = 0.1447  Diff: -6.0976e-05  *
+
+Stopped, because no improving feature was found.</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Crees que alguno de los fenómenos relacionados con el artículo de Breiman tiene relación con lo que está ocurriendo?</strong></li>
+</ul>
+<p>Sí, con el efecto <em>Rashomon</em> y la multiplicidad de buenos modelos. Es posible obtener diferentes resultados cuando existen muchos modelos diferentes para unos determinados datos que tienen aproximadamente el mismo error.</p>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-mlr" class="csl-entry" role="doc-biblioentry">
+Bischl, Bernd, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus, Giuseppe Casalicchio, y Zachary M. Jones. 2016. <span>«<span>mlr</span>: Machine Learning in R»</span>. <em>Journal of Machine Learning Research</em> 17 (170): 1-5. <a href="https://jmlr.org/papers/v17/15-066.html">https://jmlr.org/papers/v17/15-066.html</a>.
+</div>
+<div id="ref-R" class="csl-entry" role="doc-biblioentry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-Praveena" class="csl-entry" role="doc-biblioentry">
+R., Praveena Priyadarsini, Valarmathi M. L., y Sivakumari S. 2011. <span>«GAIN RATIO BASED FEATURE SELECTION METHOD FOR PRIVACY PRESERVATION»</span>. <em>ICTACT Journal on Soft Computing</em> 01 (abril): 201-5. <a href="https://doi.org/10.21917/ijsc.2011.0031">https://doi.org/10.21917/ijsc.2011.0031</a>.
+</div>
+<div id="ref-Trabelsi2017" class="csl-entry" role="doc-biblioentry">
+Trabelsi, Marwa, Nida Meddouri, y Mondher Maddouri. 2017. <span>«A New Feature Selection Method for Nominal Classifier based on Formal Concept Analysis»</span>. <em>Procedia Computer Science</em> 112: 186-94. <a href="https://doi.org/10.1016/j.procs.2017.08.227">https://doi.org/10.1016/j.procs.2017.08.227</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

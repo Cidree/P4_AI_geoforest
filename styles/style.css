@@ -1,0 +1,123 @@
+/* body  ################################################ */
+
+body {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+  background-color: #FFFFF4;
+}
+
+/* parrafos  ################################################ */
+p {
+  text-align: justify;
+  font-family: Helvetica;
+}
+
+/* encabezado  ################################################ */
+
+.quarto-title-meta-heading{
+  text-align: center;
+}
+
+.quarto-title-meta-contents{
+  text-align-last: center;
+}
+
+
+header {
+  background-color: #DAECD6;
+  padding: 0.2in;
+  border: 1px solid black;
+}
+
+.title {
+  color: darkblue;
+  font-weight: bold;
+  font-size: 26pt;
+  text-align: center;
+}
+
+.abstract-title{
+  text-align: center;
+}
+
+.abstract{
+  text-align: justify;
+}
+
+/* figuras ################################################ */
+
+.figure-caption{
+  color: #1D3F46;
+  text-align: center;
+}
+
+
+
+/* nab bar ############################################## */
+
+.nav-tabs {
+  background-color: #7ADEF1;
+}
+
+.tab-pane{
+  background-color: #EEEEFC;
+  padding: 0.2in;
+  border: 1px solid black;
+}
+
+/* hyperlinks ################################################ */
+
+a:visited #DAECD6
+
+/* Classes ################################################ */
+
+.cuadros {
+  background-color: #E9F4E6;
+  border: 2px solid;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 30px 30px 30px 30px;
+}
+
+/* Titles  ################################################ */
+
+h1 {
+  font-size: 20pt;
+  font-weight: bold;
+  color: darkblue;
+}
+
+h2 {
+  font-size: 18pt;
+  font-weight: bold;
+  color: darkblue;
+}
+
+h3 {
+  font-size: 16pt;
+  font-weight: bold;
+  color: darkblue;
+}
+
+
+.sourceCode {
+  border: 0.1rem solid;
+  border-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
